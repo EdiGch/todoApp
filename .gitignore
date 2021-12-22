@@ -5,3 +5,4 @@
 /builds
 .env.local
 /env
+/.idea
