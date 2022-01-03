@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from posts import views
+from todoapp import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,6 @@ urlpatterns = [
     path('api/posts/<int:pk>', views.PostRetrieveDestroy.as_view()),
     path('api/posts/<int:pk>/vote', views.VoteCreate.as_view()),
     path('api-auth/', include('rest_framework.urls')),
+    # Todos
+    path('todoapp/', include('todoapp.urls'))
 ]
