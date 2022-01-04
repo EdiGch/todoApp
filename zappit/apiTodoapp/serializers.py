@@ -10,3 +10,9 @@ class ToDoSerializer(serializers.ModelSerializer):
         model = Todo
         fields = ['id', 'title', 'memo', 'created', 'datecompleted', 'important']
 
+
+class ToDoCompleteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ['id']
+        read_only_fields = ['title', 'memo', 'created', 'datecompleted', 'important']
