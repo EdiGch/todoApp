@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'posts',
     'rest_framework',
     'todoapp',
+    'apiTodoapp',
 ]
 
 MIDDLEWARE = [

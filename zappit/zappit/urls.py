@@ -25,5 +25,8 @@ urlpatterns = [
     path('api/posts/<int:pk>/vote', views.VoteCreate.as_view()),
     path('api-auth/', include('rest_framework.urls')),
     # Todos
-    path('todoapp/', include('todoapp.urls'))
+    path('todoapp/', include('todoapp.urls')),
+
+    # Api
+    path('api/todoapp/', include('apiTodoapp.urls')),
 ]
