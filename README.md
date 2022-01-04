@@ -107,4 +107,28 @@ Dodaj rekord do tabeli z relacją.
 * t.item_set.all()
 * t.item_set.create(text="Go to the mall", complete=False)
 * t.item_set.get(id=1)
-* 
+
+exit()
+
+#### Dodaki do interaktywnej powłoki 
+
+```shell
+pip install django-extensions
+```
+Konfiguracja. Będziesz musiał dodać aplikację django_extensions do ustawienia INSTALLED_APPS pliku settings.py
+
+wejście
+```shell
+python manage.py shell_plus
+```
+
+Instalacja IPython
+
+```shell
+pip install ipython
+```
+
+wejście
+```shell
+python manage.py shell_plus --ipython
+```
