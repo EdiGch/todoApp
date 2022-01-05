@@ -132,3 +132,28 @@ wejście
 ```shell
 python manage.py shell_plus --ipython
 ```
+todolist = Todo.objects.all()
+
+todolist = Todo.objects.get(id=1)
+
+todolist = Todo.objects.filter(id=1)
+
+todolist = Todo.objects.filter(id__gt=3)
+
+todolist = Todo.objects.filter(id__lt=3)
+
+todolist = Todo.objects.filter(id__lte=3)
+
+todolist = Todo.objects.filter(created__year=2022)
+
+todolist = Todo.objects.filter(created__day=3)
+
+todolist = Todo.objects.filter(important__isnull=True)
+
+todolist = Todo.objects.filter(title__contains="do")
+
+todolist = Todo.objects.filter(title__startswith="No")
+
+todolist = Todo.objects.filter(title__iendswith="pi")
+
+todolist = Todo
