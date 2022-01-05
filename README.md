@@ -156,4 +156,20 @@ todolist = Todo.objects.filter(title__startswith="No")
 
 todolist = Todo.objects.filter(title__iendswith="pi")
 
+todolist = Todo.objects.filter(title__iendswith="npi").exists()
+
+todolist = Todo.objects.order_by('title')
+
+todolist = Todo.objects.order_by('title').reverse() - todolist = Todo.objects.order_by('-title')
+
+todolist = Todo.objects.values()
+
+todolist = Todo.objects.values_list()
+
+todolist = Todo.objects.values_list().filter(title__startswith="No")
+
+todolist = Todo.objects.only('title')
+
+todolist = Todo.objects.defer('title')
+
 todolist = Todo
