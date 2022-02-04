@@ -31,5 +31,5 @@ urlpatterns = [
     path('api/todoapp/', include('apiTodoapp.urls')),
 
     # Api movie
-    path('api/movie/', include('watchlist_app.urls')),
+    path('api/movie/', include('watchlist_app.api.urls')),
 ]
