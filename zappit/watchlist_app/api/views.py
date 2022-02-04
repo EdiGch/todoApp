@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from watchlist_app.models import Movie
@@ -26,16 +28,87 @@ def movie_details_v1(request, pk):
     return JsonResponse(data)
 
 
-@api_view(['GET'])
-def movie_list_v2(request):
-    movies = Movie.objects.all()
-    movie_serializer = MovieSerializer(movies, many=True)
-
-    return Response(movie_serializer.data)
-
-
 @api_view(['POST', 'GET'])
+def movie_list_v2(request):
+    if request.method == 'GET':
+        movies = Movie.objects.all()
+        movie_serializer = MovieSerializer(movies, many=True)
+
+        return Response(movie_serializer.data)
+
+    if request.method == 'POST':
+        movie_serializer = MovieSerializer(data=request.data)
+        if movie_serializer.is_valid():
+            movie_serializer.save()
+            return Response(movie_serializer.data)
+        else:
+            return Response(movie_serializer.errors)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def movie_details_v2(request, pk):
-    movie = Movie.objects.get(pk=pk)
-    movie_serializer = MovieSerializer(movie)
-    return Response(movie_serializer.data)
+    if request.method == 'GET':
+        try:
+            movie = Movie.objects.get(pk=pk)
+        except Movie.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        movie_serializer = MovieSerializer(movie)
+        return Response(movie_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        movie = Movie.objects.get(pk=pk)
+        movie_serializer = MovieSerializer(movie, data=request.data)
+        if movie_serializer.is_valid():
+            movie_serializer.save()
+            return Response(movie_serializer.data)
+        else:
+            return Response(movie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        movie = Movie.objects.get(pk=pk)
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class MovieListAVV3(APIView):
+
+    def get(self, request, format=None):
+        movies = Movie.objects.all()
+        movie_serializer = MovieSerializer(movies, many=True)
+
+        return Response(movie_serializer.data)
+
+    def post(self, request):
+        movie_serializer = MovieSerializer(data=request.data)
+        if movie_serializer.is_valid():
+            movie_serializer.save()
+            return Response(movie_serializer.data)
+        else:
+            return Response(movie_serializer.errors)
+
+
+class MovieDetailsAVV3(APIView):
+
+    def get(self, request, pk):
+        try:
+            movie = Movie.objects.get(pk=pk)
+        except Movie.DoesNotExist:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        movie_serializer = MovieSerializer(movie)
+        return Response(movie_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk):
+        movie = Movie.objects.get(pk=pk)
+        movie_serializer = MovieSerializer(movie, data=request.data)
+        if movie_serializer.is_valid():
+            movie_serializer.save()
+            return Response(movie_serializer.data)
+        else:
+            return Response(movie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, instance, pk):
+        movie = Movie.objects.get(pk=pk)
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
