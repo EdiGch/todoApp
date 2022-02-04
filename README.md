@@ -67,6 +67,10 @@ Aby utworzyć aplikację, upewnij się, że jesteś w tym samym katalogu, co man
 ```shell
 python manage.py startapp todoapp
 ```
+### Super user
+```shell
+python manage.py createsuperuser
+```
 
 ### Migracje
 

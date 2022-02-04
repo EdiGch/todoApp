@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'todoapp',
     'apiTodoapp',
+    'watchlist_app',
 ]
 
 MIDDLEWARE = [
