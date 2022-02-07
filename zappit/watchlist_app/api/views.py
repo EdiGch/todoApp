@@ -161,7 +161,10 @@ class StreamPlatformListAVV4(APIView):
 
     def get(self, request, format=None):
         stream_platforms = StreamPlatform.objects.all()
-        stream_platforms_list_serializer = StreamPlatformSerializer(stream_platforms, many=True)
+        stream_platforms_list_serializer = StreamPlatformSerializer(stream_platforms, many=True, )
+        # only for serializers.HyperlinkedRelatedField
+        # stream_platforms_list_serializer = StreamPlatformSerializer(stream_platforms, many=True,
+        #                                                             context={'request': request})
 
         return Response(stream_platforms_list_serializer.data)
 
