@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from ..models import Movie
+from ..models import Movie, WatchList, StreamPlatform
+
 
 # def active_is_true(value):
 #     if value == False:
@@ -62,3 +63,19 @@ class MovieSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Name is to short!")
         else:
             return value
+
+
+class WatchListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchList
+        fields = "__all__"
+        # fields = ['id', 'name', 'description']
+        # exclude = ['active']
+
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StreamPlatform
+        fields = "__all__"
+        # fields = ['id', 'name', 'description']
+        # exclude = ['active']
