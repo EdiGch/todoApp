@@ -35,3 +35,11 @@ class MovieSerializer(serializers.Serializer):
             raise serializers.ValidationError("Name is to short!")
         else:
             return value
+
+
+class MoviSerializerModel(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = "__all__"
+        # fields = ['id', 'name', 'description']
+        # exclude = ['active']
