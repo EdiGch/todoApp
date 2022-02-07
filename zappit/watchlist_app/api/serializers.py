@@ -1,12 +1,16 @@
 from rest_framework import serializers
 from ..models import Movie
 
+def active_is_true(value):
+    if value == False:
+        raise serializers.ValidationError("Activate is false!")
+
+
 class MovieSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField()
     description = serializers.CharField()
-    active = serializers.BooleanField()
-
+    active = serializers.BooleanField(validators=[active_is_true])
 
     def create(self, validated_data):
         return Movie.objects.create(**validated_data)
@@ -17,3 +21,25 @@ class MovieSerializer(serializers.Serializer):
         instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
+
+    # Walidacja całego obiektu
+    def validate(self, data):
+        if len(data['description']) < 2:
+            raise serializers.ValidationError("Description is to short!")
+        else:
+            return data
+
+    # Walidacja tylko pola
+    def validate_name(self, value):
+        if len(value) < 2:
+            raise serializers.ValidationError("Name is to short!")
+        else:
+            return value
+
+
+class MoviSerializerModel(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = "__all__"
+        # fields = ['id', 'name', 'description']
+        # exclude = ['active']
