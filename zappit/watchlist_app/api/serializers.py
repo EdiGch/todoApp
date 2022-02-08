@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Movie, WatchList, StreamPlatform
+from ..models import Movie, WatchList, StreamPlatform, Review
 
 
 # def active_is_true(value):
@@ -65,7 +65,15 @@ class MovieSerializer(serializers.ModelSerializer):
             return value
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
+
+
 class WatchListSerializer(serializers.ModelSerializer):
+    # One to meny
+    reviews = ReviewSerializer(many=True, read_only=True)
     class Meta:
         model = WatchList
         fields = "__all__"
@@ -75,6 +83,7 @@ class WatchListSerializer(serializers.ModelSerializer):
 
 class StreamPlatformSerializer(serializers.ModelSerializer):
     watchlist = WatchListSerializer(many=True, read_only=True)
+
     # watchlist = serializers.StringRelatedField(many=True, read_only=True)
     # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     # watchlist = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name="movie-details-v4")
